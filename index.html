@@ -1,0 +1,87 @@
+"[]"
+ );
+
+ records.push({
+   name: player,
+   score: score,
+   date: new Date().toLocaleDateString("ms-MY")
+ });
+
+ records.sort((a, b) => b.score - a.score);
+
+ records = records.slice(0, 10);
+
+ localStorage.setItem(
+   "rbtLeaderboard",
+   JSON.stringify(records)
+ );
+
+ displayLeaderboard();
+
+}
+
+
+function displayLeaderboard() {
+
+ let records = JSON.parse(
+   localStorage.getItem("rbtLeaderboard")  "[]"
+ );
+
+ const body =
+   document.getElementById("leaderboardBody");
+
+ body.innerHTML = "";
+
+ if (records.length === 0) {
+
+   body.innerHTML =
+     "<tr><td colspan='3'>Belum ada rekod.</td></tr>";
+
+   return;
+
+ }
+
+ records.forEach((record, index) => {
+
+   const tr = document.createElement("tr");
+
+   const rank = ["🥇", "🥈", "🥉"][index] 
+     (index + 1);
+
+   [rank, record.name, record.score].forEach(value => {
+
+     const td = document.createElement("td");
+     td.textContent = value;
+     tr.appendChild(td);
+
+   });
+
+   body.appendChild(tr);
+
+ });
+
+}
+
+
+// =====================================
+// MAIN SEMULA
+// =====================================
+
+function restartGame() {
+
+ clearInterval(timerInterval);
+
+ document.getElementById("result").classList.add("hidden");
+ document.getElementById("home").classList.remove("hidden");
+
+ document.getElementById("playerName").value = player;
+
+}
+
+
+// PAPAR LEADERBOARD TERKINI
+displayLeaderboard();
+
+</script>
+</body>
+</html>
